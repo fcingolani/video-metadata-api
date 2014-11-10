@@ -4,7 +4,7 @@ Simple HTTP API to obtain remote video metadata using ffprobe as a backend.
 
 ### Clone and install
 
-	$ git clone https://github.com/fcingolani/video-metadata-api
+	$ git clone https://github.com/fcingolani/video-metadata-api.git
 	$ cd video-metadata-api
 	$ npm install
 
