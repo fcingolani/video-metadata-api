@@ -38,7 +38,9 @@ Install it as a windows service (optional).
 
 Configure that service to run as a service account (won't run if you leave it as LocalSystem user).
 
-	$ sc.exe config "video-metadata-api" obj= "DOMAIN\User" password= "password"
+	$ sc stop "video-metadata-api"
+	$ sc config "video-metadata-api" obj= "DOMAIN\User" password= "password"
+	$ sc start "video-metadata-api"
 
 ## Usage
 
