@@ -1,0 +1,22 @@
+{
+  "name": "video-metadata-api",
+  "version": "1.0.0",
+  "description": "Simple HTTP API to obtain remote video metadata using ffprobe as a backend.",
+  "main": "server.js",
+  "dependencies": {
+    "fluent-ffmpeg": "^2.0.0-rc3",
+    "morgan": "^1.5.0",
+    "restify": "^2.8.3",
+    "validator": "^3.22.1",
+    "winser": "^1.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "install-windows-service": "winser -i",
+    "uninstall-windows-service": "winser -r -x"
+  },
+  "author": "Federico Cingolani <mail@fcingolani.com.ar>",
+  "license": "MIT"
+}
