@@ -7,6 +7,14 @@ var validator = require('validator');
 
 var config = require('./config.json');
 
+if(process.env && process.env.PORT){
+  config.port = process.env.PORT;
+}
+
+if(!config.basePath){
+  config.basePath = '';
+}
+
 if(config.ffmpegDir){
 	ffmpeg.setFfmpegPath(path.join(config.ffmpegDir, 'ffmpeg'));
 	ffmpeg.setFfprobePath(path.join(config.ffmpegDir, 'ffprobe'));	
@@ -19,7 +27,7 @@ var server = restify.createServer();
 server.use(restify.queryParser());
 server.use(logger);
 
-server.get('/', function(req, res, next){
+server.get(config.basePath, function(req, res, next){
 	var video_url = req.query.video_url;
 
 	if(!video_url)
