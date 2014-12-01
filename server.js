@@ -12,7 +12,7 @@ if(process.env && process.env.PORT){
 }
 
 if(!config.basePath){
-  config.basePath = '';
+  config.basePath = '/';
 }
 
 if(config.ffmpegDir){
