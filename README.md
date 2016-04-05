@@ -10,9 +10,7 @@ Simple HTTP API to obtain remote video metadata using ffprobe as a backend.
 
 ### Having global FFMPEG binaries (Linux)
 
-Install ffmpeg binaries globally using your package manager (*YUM*, *apt*, etc) and copy the default config file:
-
-	$ cp config.sample.json config.json
+Install ffmpeg binaries globally using your package manager (*YUM*, *apt*, etc).
 
 ###	Having local FFMPEG binaries (Windows)
 
@@ -21,14 +19,10 @@ Download binaries from [FFMPEG](https://www.ffmpeg.org/download.html) and place 
 - bin\ffmpeg.exe
 - bin\ffprobe.exe
 
-Create a *config.json* file:
+Create a *.env* file:
 
 ```json
-{
-	"ffmpegDir": "bin",
-	"port": 3000,
-	"logFormat": "common"
-}
+ffmpeg_dir=C:\PATH\TO\bin
 ```
 
 Install it as a windows service (optional).
@@ -41,6 +35,17 @@ Configure that service to run as a service account (won't run if you leave it as
 	$ sc stop "video-metadata-api"
 	$ sc config "video-metadata-api" obj= "DOMAIN\User" password= "password"
 	$ sc start "video-metadata-api"
+
+## Configuration
+
+You can further configure this using a [.env](https://github.com/motdotla/dotenv) file.
+
+| Var           | Description                                			| Default |
+|---------------|-------------------------------------------------|---------|
+| `base_path`		| URL base path, useful for IIS Node							| /				|
+| `ffmpeg_dir`	| FFMPEG directory, for static builds or Windows	|					|
+| `log_format`	| Morgan log format                        			 	| common	|
+| `port`				| Listening port            											| 3000		|
 
 ## Usage
 
