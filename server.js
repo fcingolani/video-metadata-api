@@ -7,6 +7,13 @@ var morgan = require('morgan');
 var ffmpeg 	= require('fluent-ffmpeg');
 var validator = require('validator');
 
+var ffprobeOptions = [];
+
+if(process.env.ffprobe_timeout_milliseconds){
+  ffprobeOptions.push('-timeout');
+  ffprobeOptions.push(process.env.ffprobe_timeout_milliseconds * 1000);
+}
+
 if(!process.env.base_path){
   process.env.base_path = '/';
 }
@@ -26,13 +33,15 @@ server.use(logger);
 server.get(process.env.base_path, function(req, res, next){
 	var video_url = req.query.video_url;
 
-	if(!video_url)
-  		return next(new restify.MissingParameterError('Missing video_url.'));
+	if(!video_url){
+    return next(new restify.MissingParameterError('Missing video_url.'));
+  }
 
-  	if(!validator.isURL(video_url))
-  		return next(new restify.InvalidArgumentError('video_url is not a valid URL.'));
+	if(!validator.isURL(video_url)){
+    return next(new restify.InvalidArgumentError('video_url is not a valid URL.'));
+  }
 
-  	ffmpeg.ffprobe(video_url, function(err, metadata) {
+  ffmpeg.ffprobe(video_url, ffprobeOptions, function(err, metadata) {
 		return err ? next(err) : res.send(metadata);
 	});
 });

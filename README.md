@@ -46,6 +46,7 @@ You can further configure this using a [.env](https://github.com/motdotla/dotenv
 | `ffmpeg_dir`	| FFMPEG directory, for static builds or Windows	|					|
 | `log_format`	| Morgan log format                        			 	| common	|
 | `port`				| Listening port            											| 3000		|
+| `ffprobe_timeout_milliseconds` | Transport time limit       		| ∞				|
 
 ## Usage
 
