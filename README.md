@@ -44,7 +44,7 @@ You can further configure this using a [.env](https://github.com/motdotla/dotenv
 |---------------|-------------------------------------------------|---------|
 | `base_path`		| URL base path, useful for IIS Node							| /				|
 | `ffmpeg_dir`	| FFMPEG directory, for static builds or Windows	|					|
-| `log_format`	| Morgan log format                        			 	| common	|
+| `log_level`		| Bunyan log level                        			 	| warn	  |
 | `port`				| Listening port            											| 3000		|
 | `ffprobe_timeout_milliseconds` | Transport time limit       		| ∞				|
 

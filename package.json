@@ -4,9 +4,9 @@
   "description": "Simple HTTP API to obtain remote video metadata using ffprobe as a backend.",
   "main": "server.js",
   "dependencies": {
+    "bunyan": "^1.8.1",
     "dotenv": "^2.0.0",
     "fluent-ffmpeg": "^2.0.0-rc3",
-    "morgan": "^1.5.0",
     "restify": "^2.8.3",
     "validator": "^3.22.1",
     "winser": "^1.0.0"

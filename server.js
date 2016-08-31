@@ -2,10 +2,12 @@ require('dotenv').config({ silent: true });
 
 var path = require('path');
 
+var Bunyan = require('bunyan');
 var restify = require('restify');
-var morgan = require('morgan');
 var ffmpeg 	= require('fluent-ffmpeg');
 var validator = require('validator');
+
+var packageJSON = require('./package.json');
 
 var ffprobeOptions = [];
 
@@ -23,14 +25,22 @@ if(process.env.ffmpeg_dir){
 	ffmpeg.setFfprobePath(path.join(process.env.ffmpeg_dir, 'ffprobe'));
 }
 
-var logger = morgan(process.env.log_format || 'common');
+var log = new Bunyan({
+  name: 'video-metadata-api',
+  level: process.env.log_level || 'info' // jshint ignore:line
+});
 
-var server = restify.createServer();
+
+var server = restify.createServer({
+  name: packageJSON.name + ' ' + packageJSON.version,
+  log: log
+});
+
+server.use(restify.requestLogger());
 
 server.use(restify.queryParser());
-server.use(logger);
 
-server.get(process.env.base_path, function(req, res, next){
+server.get(process.env.base_path, function getMetadata(req, res, next){
 	var video_url = req.query.video_url;
 
 	if(!video_url){
@@ -42,8 +52,24 @@ server.get(process.env.base_path, function(req, res, next){
   }
 
   ffmpeg.ffprobe(video_url, ffprobeOptions, function(err, metadata) {
-		return err ? next(err) : res.send(metadata);
+
+		if(err){
+      next(err);
+    }else{
+      req.log.debug({
+        metadata: metadata
+      }, 'Metadata extracted.');
+      res.send(metadata);
+      next();
+    }
+
 	});
 });
 
-server.listen(process.env.port || 3000);
+server.on('after', restify.auditLogger({
+    log: log
+}));
+
+server.listen(process.env.port || 3000, function() {
+  server.log.info('%s listening at %s', server.name, server.url);
+});
