@@ -1,0 +1,7 @@
+.git
+bin
+node_modules
+.env
+.gitignore
+README.md
+web.config
