@@ -66,6 +66,11 @@ server.get(process.env.base_path, function getMetadata(req, res, next){
 	});
 });
 
+server.get(process.env.base_path + 'check', function check(req, res, next){
+  res.send('ok');
+  next();
+});
+
 server.on('after', restify.auditLogger({
     log: log
 }));
