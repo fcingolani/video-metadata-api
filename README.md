@@ -1,44 +1,26 @@
-Simple HTTP API to obtain remote video metadata using ffprobe as a backend.
+Simple HTTP API to obtain remote video metadata using [ffprobe](https://ffmpeg.org/ffprobe.html) as a backend.
 
-## Installation
+## Docker
 
-### Clone and install
+You can find an automatically built Docker image for each tagged version of this API on [Docker Hub](https://hub.docker.com/r/fcingolani/video-metadata-api/tags/).
 
-	$ git clone https://github.com/fcingolani/video-metadata-api.git
-	$ cd video-metadata-api
-	$ npm install
-
-### Having global FFMPEG binaries (Linux)
-
-Install ffmpeg binaries globally using your package manager (*YUM*, *apt*, etc).
-
-###	Having local FFMPEG binaries (Windows)
-
-Download binaries from [FFMPEG](https://www.ffmpeg.org/download.html) and place them inside the *bin* directory:
-
-- bin\ffmpeg.exe
-- bin\ffprobe.exe
-
-Create a *.env* file:
-
-```json
-ffmpeg_dir=C:\PATH\TO\bin
 ```
+$ docker run -it -p 3000:3000 fcingolani/video-metadata-api
+npm info it worked if it ends with ok
+npm info using npm@2.15.11
+npm info using node@v4.8.3
+npm info prestart video-metadata-api@1.3.1
+npm info start video-metadata-api@1.3.1
 
-Install it as a windows service (optional).
+> video-metadata-api@1.3.1 start /usr/src/app
+> node server.js
 
-	$ npm install -g winser
-	$ npm run-script install-windows-service
-
-Configure that service to run as a service account (won't run if you leave it as LocalSystem user).
-
-	$ sc stop "video-metadata-api"
-	$ sc config "video-metadata-api" obj= "DOMAIN\User" password= "password"
-	$ sc start "video-metadata-api"
+{"name":"video-metadata-api","hostname":"4d43bae241e3","pid":15,"level":30,"msg":"video-metadata-api 1.3.1 listening at http://:::3000","time":"2017-05-23T18:51:58.423Z","v":0}
+```
 
 ## Configuration
 
-You can further configure this using a [.env](https://github.com/motdotla/dotenv) file.
+You can configure this API using a [.env](https://github.com/motdotla/dotenv) file or environment variables.
 
 | Var           | Description                                			| Default |
 |---------------|-------------------------------------------------|---------|
@@ -178,3 +160,40 @@ You will get a json response:
   }
 }
 ```
+
+
+## Manual Installation
+
+### Clone and install
+
+	$ git clone https://github.com/fcingolani/video-metadata-api.git
+	$ cd video-metadata-api
+	$ npm install
+
+### Having global FFMPEG binaries (Linux)
+
+Install ffmpeg binaries globally using your package manager (*YUM*, *apt*, etc).
+
+###	Having local FFMPEG binaries (Windows)
+
+Download binaries from [FFMPEG](https://www.ffmpeg.org/download.html) and place them inside the *bin* directory:
+
+- bin\ffmpeg.exe
+- bin\ffprobe.exe
+
+Create a *.env* file:
+
+```json
+ffmpeg_dir=C:\PATH\TO\bin
+```
+
+Install it as a windows service (optional).
+
+	$ npm install -g winser
+	$ npm run-script install-windows-service
+
+Configure that service to run as a service account (won't run if you leave it as LocalSystem user).
+
+	$ sc stop "video-metadata-api"
+	$ sc config "video-metadata-api" obj= "DOMAIN\User" password= "password"
+	$ sc start "video-metadata-api"
